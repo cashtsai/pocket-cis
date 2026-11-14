@@ -19,4 +19,4 @@
 ## 檔案用途對照
 - `pocket-mark.png`:**標準 logo(1024px,透明背景)** —— 網頁/文件引用一律用這顆。
 - `icon-512.png` / `icon-maskable-512.png`:PWA/平台 icon 專用,**無透明度**(平台規定),放到非深色底會出現烤死的邊 —— 不要當 logo 用。
-- 標準字(wordmark):「POCKET」以 Luckiest Guy(Apache 2.0)排印,白字或 Ink 字;與 logo 的鎖定關係見 design/pocket.html。
+- 標準字(wordmark):「POCKET」以 Luckiest Guy(Apache 2.0)排印,**一律品牌紅**(淺底 #EE2D2A/深底 #FF4D4A;紅底上才用白);與 logo 的鎖定關係見 design/pocket.html。
