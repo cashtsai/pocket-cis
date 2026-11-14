@@ -23,7 +23,8 @@ All three serve the same self-contained page as `design/pocket.html`
 ## What's in here
 
 ```
-cis/                          ── 設計規範 v1.0 chapters + BRAND.md (brand narrative)
+cis/                          ── 設計規範 v1.1 chapters (§1–§19) + BRAND.md (brand narrative)
+SITE_CONTENT_HANDOFF.md       ── design-site content package (page-by-page, build-ready)
 tokens/pocket-theme.schema.json ── 53-role cross-platform theme spec (JSON Schema)
 tokens/themes/{pocket,white,dark}.json ── the three built-in themes, full 53-role values
 tokens/css/pocket-tokens.css  ── web L1/L2 variables, importable as-is
@@ -60,8 +61,12 @@ see [`cis/`](cis/README.md).
 
 ## Maintaining / syncing
 
-1. **CIS documents** (`cis/`) track the app repo's `docs/POCKET_DESIGN_SPEC.md`
-   — a spec version bump upstream re-syncs the chapters here.
+1. **CIS documents** (`cis/`): chapters §1–§9 track the app repo's
+   `docs/POCKET_DESIGN_SPEC.md` — a spec version bump upstream re-syncs them here.
+   Chapters §10–§19 (the v1.1 expansion: spacing, icons, motion, state language,
+   empty & error, voice, accessibility, 24 components, platforms, brand-in-use)
+   are canonical **in this repo**; their values are transcribed from the shipped
+   app implementation, with newly generalized values marked as such.
 2. **Theme values**: `swift/PocketThemeSpec.swift` is a snapshot; the canonical
    generator lives in the app repo (`Packages/PocketDesign`). The three theme
    JSONs pin the hand-tuned brand values and take everything else from the

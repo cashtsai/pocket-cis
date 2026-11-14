@@ -1,6 +1,7 @@
-# Pocket 設計規範 v1.0 —— SDS 之上的品牌層
+# Pocket 設計規範 v1.1 —— SDS 之上的品牌層
 
-> 2026-11-13。活樣本:[`design/pocket.html`](../design/pocket.html)(單檔自包含,
+> v1.0 2026-11-13;v1.1 大擴編 2026-11-14(§10–§19 新章)。
+> 活樣本:[`design/pocket.html`](../design/pocket.html)(單檔自包含,
 > pocketone.app/design 與 design.shan.house/pocket 同步掛載)。
 >
 > 定位:**Pocket 是 Studio Design System v0.3(design.shan.house)之上的品牌層。**
@@ -31,9 +32,24 @@
 | §7 | [07-forbidden.md](07-forbidden.md) | 禁例 |
 | §8 | [08-token-mapping.md](08-token-mapping.md) | 落地對照:三端 token 名 |
 | §9 | [09-rulings.md](09-rulings.md) | 衝突表 + 裁決紀錄(2026-11-13) |
+| §10 | [10-spacing-grid.md](10-spacing-grid.md) | 間距與格線:4pt 階、頁邊距、列表行高箱 |
+| §11 | [11-icons.md](11-icons.md) | 圖示:SF Symbols 正典、phase 符號表、工具語意表、Material 對位 |
+| §12 | [12-motion.md](12-motion.md) | 動態:兩檔時值一條曲線、delayed-status、無打字機/無固定 tick 鐵則 |
+| §13 | [13-state-language.md](13-state-language.md) | **狀態語言(招牌章)**:WorkingBar 三件組、10 態膠囊、佇列/斷線/限額/鎖定/stalled/審批 |
+| §14 | [14-empty-error.md](14-empty-error.md) | 空與錯:空狀態公式、搜尋無結果、錯誤留痕、Undo 範式、skeleton |
+| §15 | [15-voice-tone.md](15-voice-tone.md) | 文案與語氣:三聲、三語守門、進行態、日界規則、人話 footer |
+| §16 | [16-accessibility.md](16-accessibility.md) | 無障礙:對比線、Dynamic Type、focus ring、觸控目標、reduced-motion |
+| §17 | [17-components.md](17-components.md) | 元件庫 24 件(§6 八件擴編):結構+token+狀態+三端對位 |
+| §18 | [18-platforms.md](18-platforms.md) | 平台落地:iOS/Android/Web Console/macOS/官網、PWA/icon 規則 |
+| §19 | [19-brand-in-use.md](19-brand-in-use.md) | 品牌應用:lockup、誤用紅叉、App icon、launch 畫面 |
 
 ## 版本
 
+- **v1.1**(2026-11-14):大擴編。§10–§19 新章(間距/圖示/動態/狀態語言/空與錯/
+  文案/無障礙/元件 24 件/平台落地/品牌應用),規格全數抄自出貨實作與既有品牌資產,
+  新歸納值逐條標注「歸納自現行實作」。§1–§9 正典仍追 app repo 的
+  `POCKET_DESIGN_SPEC.md`;**§10–§19 正典在本 repo**。另出
+  [`SITE_CONTENT_HANDOFF.md`](../SITE_CONTENT_HANDOFF.md)(設計站建站內容包)。
 - **v1.0**(2026-11-13):首版。對位 SDS v0.3。
 - 追版規則:品牌識別文件升版、SDS 升版、或 §9 任一衝突裁決後,規範正文與
   `design/pocket.html` 同步改版並列入變更紀錄;本目錄隨之重切。
