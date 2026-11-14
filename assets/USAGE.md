@@ -8,29 +8,10 @@
 | `icon-maskable-512.png` | PWA maskable variant(safe-zone padded) |
 | `launch-art.png` | Launch screen art(iOS `LaunchArt.imageset` 同源) |
 
-## 授權邊界(先讀這段)
+## 授權邊界 License boundary
 
-本 repo 的 **代碼與 tokens 是 MIT、文件是 CC BY 4.0**,但:
-
-> **Pocket 的名稱、logo、吉祥物(牛仔口袋 icon)、launch art 與 persona
-> 頭像是商標/品牌識別資產,不在上述任何授權範圍內。**
-> The Pocket name, logo, mascot (the denim-pocket icon), launch art, and
-> persona avatars are trademarks / brand identity assets and are **not**
-> licensed under MIT or CC BY 4.0.
-
-### 可以(nominative use)
-
-- 在文章、教學、評測中展示未修改的 icon/截圖來**指稱 Pocket 本身**。
-- 第三方主題、整合、客戶端用「for Pocket」「works with Pocket」描述相容性
-  (不得暗示官方出品或背書)。
-
-### 不可以
-
-- 把這些資產(或改作)用作**你自己產品/服務的識別**。
-- 修改、重上色、變形 logo 或吉祥物後發布。
-- 在名稱、網域、商店列表中使用「Pocket」作為你的品牌主體,或以任何方式
-  暗示官方關係。
-
-拿不準的用法,開 issue 問,不要猜。Theme 作者請走
-[`../brief/POCKET_THEME_BRIEF.md`](../brief/POCKET_THEME_BRIEF.md) ——
-換皮不需要碰識別資產。
+- **Tokens 與程式碼**:MIT。**文件**:CC BY 4.0。
+- **Pocket 名稱與 logo(含本目錄資產)**:可於**非商業情境**直接使用 ——
+  需保持原樣(不得變形/重上色)、不得暗示官方背書或合作關係。
+  (精神同我們使用 Claude logo 的方式:註明出處、不冒充官方。)
+- 商業使用(含周邊、付費產品內嵌識別)請先聯絡。
