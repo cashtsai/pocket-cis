@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pocketone.app/design/pocket-theme.schema.json",
+  "title": "Pocket Theme Spec v1",
+  "description": "Cross-platform semantic theme for Pocket (iOS/Android/web share one JSON). 53 roles — t3code's 61-role palette minus the 8 sidebar* roles (Pocket has no persistent sidebar; those surfaces collapse into the surface family). Trio convention: X = main color, XForeground = foreground readable on XSurface, XSurface = the tinted surface for that semantic. Reference implementation: swift/PocketThemeSpec.swift (schema + 3-value generator); prose spec: docs/THEME_SPEC.md in the app repo.",
+  "type": "object",
+  "required": ["version", "id", "name", "appearance", "colors"],
+  "properties": {
+    "version": {
+      "const": 1,
+      "description": "Schema version."
+    },
+    "id": {
+      "type": "string",
+      "description": "Theme id; user-built themes are always \"custom\"."
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name."
+    },
+    "appearance": {
+      "enum": ["light", "dark"],
+      "description": "Drives status-bar / keyboard chrome and default fallbacks."
+    },
+    "seed": {
+      "type": "object",
+      "description": "Present when the spec was produced by the 3-value generator (appearance + canvas + accent -> full spec); lets an editor re-open in guided mode and regenerate.",
+      "required": ["canvas", "accent"],
+      "properties": {
+        "canvas": { "$ref": "#/$defs/hex" },
+        "accent": { "$ref": "#/$defs/hex" }
+      },
+      "additionalProperties": false
+    },
+    "colors": {
+      "type": "object",
+      "description": "All 53 roles are required; values are lowercase opaque sRGB #rrggbb.",
+      "required": [
+        "canvas", "chrome", "toolbar", "toolbarForeground", "toolbarBorder",
+        "toolbarControl", "toolbarControlForeground", "toolbarControlHover",
+        "surface", "surfaceRaised", "surfaceOverlay",
+        "text", "textMuted", "border", "input", "focus",
+        "accent", "accentForeground", "accentSurface", "accentSurfaceForeground",
+        "secondary", "secondaryForeground", "muted", "mutedForeground",
+        "placeholder", "secondaryLabel", "iconMuted",
+        "error", "errorForeground", "errorSurface",
+        "warning", "warningForeground", "warningSurface",
+        "update", "updateForeground", "updateSurface",
+        "messageSurface", "messageForeground",
+        "messageAction", "messageActionForeground", "messageActionHover",
+        "codeBackground", "codeForeground",
+        "searchMatchBackground", "searchMatchForeground",
+        "searchMatchActiveBackground", "searchMatchActiveForeground",
+        "terminalBackground", "terminalForeground", "terminalCursor",
+        "terminalSelection", "terminalScrollbar", "terminalScrollbarHover"
+      ],
+      "additionalProperties": { "$ref": "#/$defs/hex" },
+      "propertyNames": {
+        "enum": [
+          "canvas", "chrome", "toolbar", "toolbarForeground", "toolbarBorder",
+          "toolbarControl", "toolbarControlForeground", "toolbarControlHover",
+          "surface", "surfaceRaised", "surfaceOverlay",
+          "text", "textMuted", "border", "input", "focus",
+          "accent", "accentForeground", "accentSurface", "accentSurfaceForeground",
+          "secondary", "secondaryForeground", "muted", "mutedForeground",
+          "placeholder", "secondaryLabel", "iconMuted",
+          "error", "errorForeground", "errorSurface",
+          "warning", "warningForeground", "warningSurface",
+          "update", "updateForeground", "updateSurface",
+          "messageSurface", "messageForeground",
+          "messageAction", "messageActionForeground", "messageActionHover",
+          "codeBackground", "codeForeground",
+          "searchMatchBackground", "searchMatchForeground",
+          "searchMatchActiveBackground", "searchMatchActiveForeground",
+          "terminalBackground", "terminalForeground", "terminalCursor",
+          "terminalSelection", "terminalScrollbar", "terminalScrollbarHover"
+        ]
+      }
+    },
+    "$meta": {
+      "type": "object",
+      "description": "Repo-side annotations (provenance, pinned roles). Ignored by consumers."
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "hex": {
+      "type": "string",
+      "pattern": "^#[0-9a-f]{6}$",
+      "description": "Lowercase opaque sRGB hex."
+    }
+  }
+}

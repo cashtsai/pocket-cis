@@ -1,0 +1,494 @@
+<!doctype html>
+<!--
+  Pocket 設計規範 styleguide v1.0 —— 單檔自包含(inline CSS、零外部資源、
+  僅主題切換/色票複製用極少量 JS)。
+  此頁同步存在 pocketone.app/design 與 design.shan.house/pocket,
+  單一真相在 pocket-cis repo design/pocket.html;規範正文:docs/POCKET_DESIGN_SPEC.md。
+  對位 Studio Design System v0.3(design.shan.house);色值真相源:
+  PocketDesign(PocketTheme/PocketThemeSpec)+ pocket-cis console css。
+-->
+<html lang="zh-Hant" data-theme="pocket">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pocket 設計規範 v1.0</title>
+<style>
+/* ═══ Token 三層制(SDS v0.3)—— L1 品牌常數 ═══ */
+:root{
+  --pocket-red:#EE2D2A; --pocket-red-300:#FF4D4A;
+  --red-hover:#D11F1C; --red-active:#B01A18;
+  --overall-blue:#049CD8; --overall-blue-300:#2AA8E0;
+  --star-yellow:#FBD000; --star-yellow-300:#FFD426;
+  --ink:#17171A; --paper-cream:#FFF2D6;
+  /* 結構 token(跨主題不變):圓角三檔 + Pocket 泡泡檔 */
+  --btn-radius:9999px; --field-radius:10px; --dialog-radius:20px;
+  --bubble-radius:14px; /* Pocket 自有語彙 */
+  /* 動效:一條曲線兩檔時長 */
+  --ease-standard:cubic-bezier(.2,0,0,1);
+  --duration-base:.2s; --duration-slow:.25s;
+  /* 陰影四級(奶油底暖灰基底;dark 在下面覆蓋) */
+  --shadow-1:0 2px 6px oklch(25% .04 55/.12),0 1px 2px oklch(25% .04 55/.08);
+  --shadow-2:0 8px 24px oklch(25% .04 55/.17),0 1px 2px oklch(25% .04 55/.08);
+  --shadow-3:0 16px 48px oklch(25% .04 55/.23),0 1px 2px oklch(25% .04 55/.08);
+  --shadow-4:0 28px 80px oklch(25% .04 55/.3),0 1px 2px oklch(25% .04 55/.08);
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+/* ═══ L2 語意別名(role 名對位 PocketThemeSpec)═══ */
+:root,:root[data-theme="pocket"]{
+  --color-canvas:var(--paper-cream);
+  --color-surface:#FFFFFF;
+  --color-surface-sunken:#F7EACB;
+  --color-surface-hover:rgba(23,23,26,.06);
+  --color-accent-surface:#FBDFD6;
+  --color-border:rgba(23,23,26,.14);
+  --color-text:var(--ink);
+  --color-text-muted:#6B6760;
+  --color-text-faint:#8A847A;
+  --color-text-disabled:#A89F93;
+  --color-accent:var(--pocket-red);
+  --color-accent-hover:var(--red-hover);
+  --color-accent-foreground:#FFFFFF;
+  --color-link:var(--overall-blue);
+  --color-action-link:#C42320;
+  --color-amber:var(--star-yellow);
+  --color-success:#1d7a4a; --color-danger:#b42318;
+  --color-info:#1f6aa1; --color-warning:oklch(48% .1 85);
+  --color-danger-foreground:#FFFFFF;
+}
+:root[data-theme="white"]{
+  --color-canvas:#F5F5F7; --color-surface:#FFFFFF; --color-surface-sunken:#E9E9EC;
+  --color-surface-hover:rgba(23,23,26,.05);
+  --color-accent-surface:#FBDFDE;
+  --color-border:rgba(23,23,26,.14);
+  --color-text:var(--ink);
+  --color-text-muted:#68686D; --color-text-faint:#84848D;
+  --color-accent:var(--pocket-red); --color-accent-hover:var(--red-hover);
+  --color-accent-foreground:#FFFFFF;
+  --color-link:var(--overall-blue); --color-action-link:#C42320; --color-amber:var(--star-yellow);
+  --color-success:#1d7a4a; --color-danger:#b42318;
+  --color-info:#1f6aa1; --color-warning:oklch(48% .1 85);
+  --color-danger-foreground:#FFFFFF;
+}
+:root[data-theme="dark"]{
+  --color-canvas:#131317; --color-surface:#1E1E25; --color-surface-sunken:#0E0E12;
+  --color-surface-hover:rgba(255,255,255,.07);
+  --color-accent-surface:#4A2B2C;
+  --color-border:rgba(255,255,255,.12);
+  --color-text:#F2F2F5;
+  --color-text-muted:#9A9AA2; --color-text-faint:#70707A; --color-text-disabled:#70707A;
+  --color-accent:var(--pocket-red-300); --color-accent-hover:#FF6360;
+  --color-accent-foreground:#FFFFFF;
+  --color-link:var(--overall-blue-300); --color-action-link:var(--overall-blue-300);
+  --color-amber:var(--star-yellow-300);
+  --color-success:#6fd39d; --color-danger:#f59a90;
+  --color-info:#7cc0ec; --color-warning:oklch(82% .14 85);
+  --color-danger-foreground:#2A1210;
+  --shadow-1:0 1px 2px oklch(0% 0 0/.35),0 1px 6px oklch(0% 0 0/.28);
+  --shadow-2:0 2px 8px oklch(0% 0 0/.45),0 14px 40px oklch(0% 0 0/.55);
+  --shadow-3:0 16px 48px oklch(0% 0 0/.55),0 1px 2px oklch(0% 0 0/.35);
+  --shadow-4:0 28px 80px oklch(0% 0 0/.6),0 1px 2px oklch(0% 0 0/.35);
+}
+/* ═══ L3:頁面本身就用 Pocket 規範做 ═══ */
+*{box-sizing:border-box;scrollbar-width:thin;scrollbar-color:var(--color-text-faint) transparent;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--color-canvas);color:var(--color-text);
+  font:16px/1.75 var(--sans);-webkit-font-smoothing:antialiased;
+  transition:background var(--duration-slow) var(--ease-standard);}
+main{max-width:980px;margin:0 auto;padding:0 20px 48px;}
+a{color:var(--color-action-link);}
+:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px;}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;}}
+
+/* 頂欄 */
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:12px 20px;background:var(--color-surface);border-bottom:1px solid var(--color-border);
+  box-shadow:var(--shadow-1);}
+.wordmark{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.04em;font-size:18px;}
+.pocket-logo{width:28px;height:28px;border-radius:7px;flex:none;
+  background:linear-gradient(135deg,var(--star-yellow),var(--pocket-red) 55%,var(--red-active));
+  position:relative;box-shadow:var(--shadow-1);}
+.pocket-logo::after{content:"";position:absolute;inset:11px 5px 5px;background:var(--color-surface);
+  border-radius:3px 3px 8px 8px;opacity:.92;}
+.ver{font-size:13px;line-height:1.6;color:var(--color-text-muted);font-weight:500;}
+.theme-switch{margin-inline-start:auto;display:flex;gap:4px;background:var(--color-surface-sunken);
+  border-radius:var(--btn-radius);padding:3px;}
+.theme-switch button{font:600 13px/1.6 var(--sans);border:0;background:transparent;color:var(--color-text-muted);
+  padding:4px 14px;border-radius:var(--btn-radius);cursor:pointer;
+  transition:background var(--duration-base) var(--ease-standard),color var(--duration-base) var(--ease-standard);}
+.theme-switch button.active{background:var(--color-accent);color:var(--color-accent-foreground);}
+.theme-switch button:hover:not(.active){color:var(--color-text);}
+
+/* 章節 */
+h1{font-size:20px;line-height:1.3;margin:36px 0 6px;}
+h2{font-size:18px;line-height:1.35;margin:40px 0 4px;display:flex;align-items:baseline;gap:10px;}
+h2 .no{color:var(--color-accent);font-variant-numeric:tabular-nums;}
+.lede,.note{color:var(--color-text-muted);font-size:13px;line-height:1.6;margin:.2em 0 1em;}
+.note code,.lede code{font-family:var(--mono);font-size:.95em;background:var(--color-surface-sunken);
+  padding:1px 5px;border-radius:5px;}
+section{margin-bottom:8px;}
+.panel{background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--bubble-radius);padding:18px;box-shadow:var(--shadow-1);}
+
+/* 色票格 */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+.sw{border:1px solid var(--color-border);border-radius:var(--field-radius);overflow:hidden;
+  background:var(--color-surface);cursor:pointer;padding:0;text-align:start;font:inherit;color:inherit;
+  transition:transform var(--duration-base) var(--ease-standard);}
+.sw:hover{transform:translateY(-2px);box-shadow:var(--shadow-2);}
+.sw .chip{height:52px;border-bottom:1px solid var(--color-border);}
+.sw .meta{padding:7px 10px;}
+.sw .nm{font-size:13px;line-height:1.6;font-weight:600;display:block;}
+.sw .val{font-family:var(--mono);font-size:12px;color:var(--color-text-muted);display:block;}
+.sw .role{font-size:12px;line-height:1.5;color:var(--color-text-faint);display:block;}
+.copied-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--color-surface);color:var(--color-text);border:1px solid var(--color-border);
+  padding:8px 18px;border-radius:var(--dialog-radius);box-shadow:var(--shadow-3);
+  font-size:13px;line-height:1.6;z-index:20;opacity:0;
+  transition:all var(--duration-slow) var(--ease-standard);}
+.copied-toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+/* 字階 */
+.type-row{display:grid;grid-template-columns:7.5em 1fr;gap:14px;align-items:baseline;
+  padding:10px 0;border-bottom:1px solid var(--color-border);}
+.type-row:last-child{border-bottom:0;}
+.type-meta{font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--color-text-muted);}
+.t-title{font-size:20px;line-height:1.3;font-weight:650;}
+.t-subtitle{font-size:18px;line-height:1.35;font-weight:600;}
+.t-body{font-size:16px;line-height:1.75;}
+.t-caption{font-size:13px;line-height:1.6;color:var(--color-text-muted);}
+.t-mono{font-family:var(--mono);font-size:13px;line-height:1.6;}
+
+/* 形狀/陰影 */
+.shape-grid{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;}
+.shape{display:flex;flex-direction:column;gap:6px;align-items:center;font-size:12px;
+  line-height:1.5;color:var(--color-text-muted);font-family:var(--mono);}
+.shape>i{display:block;width:104px;height:56px;background:var(--color-accent-surface);
+  border:1px solid var(--color-border);}
+.shadow-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:18px;}
+.shadow-grid .sh{height:72px;border-radius:var(--bubble-radius);background:var(--color-surface);
+  display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--color-text-muted);}
+
+/* ── 元件八件 ── */
+.demo{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+.btn{font:600 16px/1.5 var(--sans);border:0;border-radius:var(--btn-radius);cursor:pointer;
+  padding:8px 20px;transition:filter var(--duration-base) var(--ease-standard);}
+.btn:hover{filter:brightness(1.08);}
+.btn-primary{background:var(--color-accent);color:var(--color-accent-foreground);}
+.btn-secondary{background:var(--color-surface);color:var(--color-text);border:1px solid var(--color-border);}
+.btn-ghost{background:transparent;color:var(--color-text);}
+.btn-ghost:hover{background:var(--color-surface-hover);}
+.btn-danger{background:transparent;border:1px solid var(--color-danger);color:var(--color-danger);
+  font-size:13px;padding:5px 15px;}
+.btn[disabled]{background:var(--color-surface-sunken);color:var(--color-text-disabled);cursor:default;filter:none;}
+
+/* 訊息泡 */
+.chat{display:flex;flex-direction:column;gap:10px;max-width:560px;}
+.bubble{max-width:86%;padding:10px 14px;border-radius:var(--bubble-radius);box-shadow:var(--shadow-1);}
+.bubble.agent{align-self:flex-start;background:var(--color-surface);
+  border:1px solid var(--color-border);border-bottom-left-radius:6px;}
+.bubble.user{align-self:flex-end;background:var(--color-accent-surface);color:var(--color-text);
+  border:1px solid color-mix(in srgb,var(--color-accent) 28%,transparent);
+  border-bottom-right-radius:6px;}
+.bubble .meta{display:block;font-size:12px;line-height:1.6;color:var(--color-text-faint);
+  font-variant-numeric:tabular-nums;margin-top:2px;}
+
+/* 狀態點(phase 表) */
+.phase-table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.6;}
+.phase-table th,.phase-table td{text-align:start;padding:6px 10px;border-bottom:1px solid var(--color-border);}
+.phase-table th{color:var(--color-text-muted);font-weight:600;}
+.dot{display:inline-flex;align-items:center;gap:7px;font-weight:600;}
+.dot i{width:10px;height:10px;border-radius:50%;flex:none;display:inline-block;}
+.ph-success i{background:var(--color-success);} .ph-success{color:var(--color-success);}
+.ph-warning i{background:var(--color-warning);} .ph-warning{color:var(--color-warning);}
+.ph-danger i{background:var(--color-danger);} .ph-danger{color:var(--color-danger);}
+.ph-info i{background:var(--color-info);} .ph-info{color:var(--color-info);}
+.ph-muted i{background:var(--color-text-muted);} .ph-muted{color:var(--color-text-muted);}
+.capsule{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;
+  border-radius:var(--btn-radius);background:var(--color-surface-sunken);
+  border:1px solid color-mix(in srgb,var(--color-warning) 35%,transparent);
+  font-size:13px;line-height:1.6;color:var(--color-text-muted);}
+.capsule .act{font:700 13px/1.6 var(--sans);border:0;border-radius:var(--btn-radius);
+  padding:3px 12px;background:var(--color-danger);color:var(--color-danger-foreground);cursor:pointer;}
+
+/* WorkingBar */
+.workbar{display:flex;align-items:center;gap:9px;padding:11px 16px;font-size:13px;line-height:1.6;
+  background:color-mix(in srgb,var(--color-accent) 7%,transparent);
+  border-top:1px solid color-mix(in srgb,var(--color-accent) 20%,transparent);
+  border-radius:0 0 var(--field-radius) var(--field-radius);}
+.spin{width:.72em;height:.72em;border:2px solid var(--color-accent);
+  border-inline-end-color:transparent;border-radius:50%;flex:none;
+  animation:work-spin .85s linear infinite;}
+@keyframes work-spin{to{transform:rotate(360deg);}}
+.shimmer{font-weight:600;color:var(--color-accent);
+  background:linear-gradient(100deg,var(--color-accent) 38%,color-mix(in srgb,var(--color-accent) 35%,#fff) 50%,var(--color-accent) 62%);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;animation:shimmer 2.2s linear infinite;}
+@keyframes shimmer{to{background-position:-220% 0;}}
+.elapsed{color:color-mix(in srgb,var(--color-accent) 70%,transparent);
+  font-variant-numeric:tabular-nums;}
+.workbar .stop{margin-inline-start:auto;font:600 12px/1.5 var(--sans);color:var(--color-danger);
+  background:none;border:0;cursor:pointer;display:inline-flex;gap:5px;align-items:center;}
+
+/* 列表列 */
+.sesslist{background:var(--color-surface-sunken);border:1px solid var(--color-border);
+  border-radius:var(--field-radius);padding:6px;max-width:360px;}
+.sess{padding:9px 11px;border-radius:var(--field-radius);cursor:pointer;
+  transition:background var(--duration-base) var(--ease-standard);}
+.sess:hover{background:var(--color-surface-hover);}
+.sess.active{background:var(--color-accent-surface);box-shadow:inset 3px 0 0 var(--color-accent);}
+.sess.active .nm{color:var(--color-accent);}
+.sess .nm{font-weight:600;font-size:16px;line-height:1.5;display:block;}
+.sess .sub{font-size:13px;line-height:1.6;color:var(--color-text-muted);display:block;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* 輸入框 */
+.composer{display:flex;gap:10px;align-items:flex-end;max-width:560px;}
+.input{flex:1;font:16px/1.5 var(--sans);color:var(--color-text);
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--field-radius);padding:10px 12px;resize:none;}
+.input::placeholder{color:var(--color-text-faint);}
+.input:focus{outline:none;border-color:var(--color-accent);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--color-accent) 18%,transparent);}
+
+/* toast */
+.toast-demo{display:inline-flex;align-items:center;gap:8px;
+  background:var(--color-danger);color:var(--color-danger-foreground);
+  padding:10px 18px;border-radius:var(--dialog-radius);box-shadow:var(--shadow-3);
+  font-size:13px;line-height:1.6;}
+
+/* 禁例 */
+.dont-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+.dont,.do{border-radius:var(--bubble-radius);border:1px solid var(--color-border);overflow:hidden;
+  background:var(--color-surface);}
+.dont .tag,.do .tag{display:flex;align-items:center;gap:7px;font:700 13px/1.6 var(--sans);
+  padding:7px 12px;border-bottom:1px solid var(--color-border);}
+.dont .tag{color:var(--color-danger);} .do .tag{color:var(--color-success);}
+.ex{padding:14px;min-height:96px;}
+.ex-redflood{background:var(--pocket-red);color:#fff;border-radius:var(--field-radius);
+  padding:12px;font-weight:700;}
+.ex-redflood p{margin:4px 0 0;font-weight:400;font-size:13px;line-height:1.6;}
+.ex-tight{line-height:1.25;font-size:16px;}
+.ex-nofocus{outline:none!important;box-shadow:none!important;}
+.badok{display:inline-block;font:600 13px/1.6 var(--sans);padding:4px 14px;border-radius:var(--btn-radius);}
+.cap{font-size:12px;line-height:1.5;color:var(--color-text-faint);padding:0 12px 10px;margin:0;}
+
+footer{margin-top:48px;border-top:1px solid var(--color-border);padding-top:16px;
+  font-size:13px;line-height:1.6;color:var(--color-text-muted);}
+footer code{font-family:var(--mono);background:var(--color-surface-sunken);padding:1px 5px;border-radius:5px;}
+.scrollwrap{overflow-x:auto;}
+</style>
+</head>
+<body>
+<header>
+  <span class="wordmark"><span class="pocket-logo" aria-hidden="true"></span>POCKET<span class="ver">設計規範 v1.0 · SDS v0.3 品牌層</span></span>
+  <div class="theme-switch" role="tablist" aria-label="主題切換">
+    <button data-set-theme="pocket" class="active">Pocket</button>
+    <button data-set-theme="white">White</button>
+    <button data-set-theme="dark">Dark</button>
+  </div>
+</header>
+<main>
+
+<h1>Pocket = SDS 之上的品牌層</h1>
+<p class="lede">SDS 管結構(token 三層制、狀態色固定、字階、圓角三檔、陰影四級、動效);
+Pocket 管品牌換皮(五色、奶油底、泡泡語彙、吉祥物口袋)。本頁即活樣本 ——
+頁面本身就用 Pocket 規範做。規範正文:<code>docs/POCKET_DESIGN_SPEC.md</code>。
+不可覆寫:狀態色/對比度/動效/無障礙;點任何色票可複製值。</p>
+
+<section>
+<h2><span class="no">01</span>色彩 —— L1 五色 + 奶油底 → L2 語意</h2>
+<p class="note">上排 L1 品牌常數(跨主題固定),下排 L2 語意(隨主題切換,role 名對位 PocketThemeSpec)。</p>
+<div class="swatches" id="sw-l1"></div>
+<p class="note" style="margin-top:14px">L2 語意(切主題看它變):</p>
+<div class="swatches" id="sw-l2"></div>
+</section>
+
+<section>
+<h2><span class="no">02</span>字階四檔(SDS)</h2>
+<div class="panel">
+  <div class="type-row"><span class="type-meta">title 20/1.3</span><span class="t-title">口袋裡的 AI agent,隨叫隨到</span></div>
+  <div class="type-row"><span class="type-meta">subtitle 18/1.35</span><span class="t-subtitle">今天的工作:三條 session 在跑,一條在等你</span></div>
+  <div class="type-row"><span class="type-meta">body 16/1.75</span><span class="t-body">正文行高鐵則:CJK 正文行高不得低於 1.7。這一行示範 body 檔在奶油底上的閱讀密度,混排 English 與 123 數字也要穩。iOS display 軌用 jf 粉圓,web 用系統堆疊(Inter + Noto 對位)。</span></div>
+  <div class="type-row"><span class="type-meta">caption 13/1.6</span><span class="t-caption">時間戳、meta、狀態膠囊用 caption 檔 · 14:32 · 2m 05s</span></div>
+  <div class="type-row"><span class="type-meta">mono 13/1.6</span><span class="t-mono">PocketThemeGenerator.generate(canvas:"#FFF2D6", accent:"#EE2D2A")</span></div>
+</div>
+</section>
+
+<section>
+<h2><span class="no">03</span>形狀與陰影</h2>
+<p class="note">圓角三檔(SDS)+ <strong>泡泡 14 = Pocket 自有語彙</strong>(不入 SDS 三檔);陰影四級。</p>
+<div class="panel">
+  <div class="shape-grid">
+    <span class="shape"><i style="border-radius:var(--btn-radius)"></i>btn 9999 膠囊</span>
+    <span class="shape"><i style="border-radius:var(--field-radius)"></i>field 10</span>
+    <span class="shape"><i style="border-radius:var(--bubble-radius);border-color:var(--color-accent)"></i>泡泡 14 ★品牌</span>
+    <span class="shape"><i style="border-radius:var(--dialog-radius)"></i>dialog 20</span>
+  </div>
+  <div class="shadow-grid" style="margin-top:22px">
+    <div class="sh" style="box-shadow:var(--shadow-1)">級1 卡片</div>
+    <div class="sh" style="box-shadow:var(--shadow-2)">級2 浮層</div>
+    <div class="sh" style="box-shadow:var(--shadow-3)">級3 toast</div>
+    <div class="sh" style="box-shadow:var(--shadow-4)">級4 對話框</div>
+  </div>
+  <p class="note" style="margin:16px 0 0">動效:<code>cubic-bezier(.2,0,0,1)</code> × <code>.2s/.25s</code>,全站 transition 只准引用;reduced-motion 全關。</p>
+</div>
+</section>
+
+<section>
+<h2><span class="no">04</span>元件八件</h2>
+
+<p class="note">① 按鈕 —— 膠囊簽名;primary=accent、secondary=surface+邊、ghost、danger 細邊。accent 上白字限 semibold 短標籤(4.16:1 = 大字 AA)。</p>
+<div class="panel"><div class="demo">
+  <button class="btn btn-primary">送出</button>
+  <button class="btn btn-secondary">繼續</button>
+  <button class="btn btn-ghost">略過</button>
+  <button class="btn btn-danger">中斷</button>
+  <button class="btn" disabled>停用</button>
+</div></div>
+
+<p class="note">② 卡片 —— radius 14、surface 底、border 細邊、影級 1(本頁每個 panel 就是它)。
+③ 訊息泡 —— agent 泡=surface+缺左下角;user 泡=accentSurface+accent 28% 邊+缺右下角,ink 字 14.16:1。</p>
+<div class="panel"><div class="chat">
+  <div class="bubble agent">老闆,三條 session 跑完了,PR 都開好了。要我先合哪一條?<span class="meta">Pocky · 14:31</span></div>
+  <div class="bubble user">先合 bridge 那條,app 的等截圖看過再說。<span class="meta">14:32 ✓</span></div>
+  <div class="bubble agent">收到,bridge PR 合併中 —— 跑完 smoke 我回報。<span class="meta">Pocky · 14:32</span></div>
+</div></div>
+
+<p class="note">④ 狀態點 —— phase →(符號, 語意色)單一真相表(<code>PocketPhaseStyle</code>),全系統同表取色,不准自己配。狀態色 = SDS 固定值。</p>
+<div class="panel">
+<div class="scrollwrap">
+<table class="phase-table">
+  <tr><th>phase</th><th>點</th><th>tint</th><th>SF Symbol</th></tr>
+  <tr><td>running</td><td><span class="dot ph-success"><i></i>執行中</span></td><td>success</td><td class="t-mono">play.circle.fill</td></tr>
+  <tr><td>approval</td><td><span class="dot ph-warning"><i></i>等待核准</span></td><td>warning</td><td class="t-mono">hand.raised.fill</td></tr>
+  <tr><td>input</td><td><span class="dot ph-info"><i></i>等你回應</span></td><td>info</td><td class="t-mono">questionmark.circle.fill</td></tr>
+  <tr><td>failed</td><td><span class="dot ph-danger"><i></i>失敗</span></td><td>danger</td><td class="t-mono">exclamationmark.triangle.fill</td></tr>
+  <tr><td>done</td><td><span class="dot ph-success"><i></i>完成</span></td><td>success</td><td class="t-mono">checkmark.circle.fill</td></tr>
+  <tr><td>queued</td><td><span class="dot ph-muted"><i></i>排隊中</span></td><td>muted</td><td class="t-mono">hourglass</td></tr>
+  <tr><td>reconnecting</td><td><span class="dot ph-warning"><i></i>重連中</span></td><td>warning</td><td class="t-mono">wifi.exclamationmark</td></tr>
+</table>
+</div>
+<p class="note" style="margin:12px 0 0">衍生容器同表取色 —— 底部狀態膠囊(十態,緊急直亮、弱資訊 1.5s 門檻):</p>
+<span class="capsule"><span class="dot ph-danger"><i></i></span>停止沒有反應<button class="act">強制停止</button></span>
+</div>
+
+<p class="note">⑤ WorkingBar —— 脈動指示 + shimmer 掃「真實活動字」(不掃點)+ 計時格式升級制(14s → 2m 05s → 1h 20m)+ 停止鈕;busy 滿 1.5s 才現、消失延遲 0.3s。</p>
+<div class="panel" style="padding:0;overflow:hidden">
+  <div style="padding:14px 16px;color:var(--color-text-faint);font-size:13px">(對話內容…)</div>
+  <div class="workbar"><span class="spin" aria-hidden="true"></span><span class="shimmer">編輯 PocketThemeSpec.swift</span><span class="elapsed">· 2m 05s</span><button class="stop">⏹ 停止</button></div>
+</div>
+
+<p class="note">⑥ 列表列 —— field 檔 radius 10;側欄底=sunken(比頁底深一階);選中=accentSurface + 左緣 3px accent 條。</p>
+<div class="panel"><div class="sesslist">
+  <div class="sess active"><span class="nm">bridge 對齊 SDS v0.3</span><span class="sub">CC · 執行中 · 14:28</span></div>
+  <div class="sess"><span class="nm">design/pocket.html 守門</span><span class="sub">CX · 等待核准 · 14:12</span></div>
+  <div class="sess"><span class="nm">晨報管線</span><span class="sub">OpenClaw · 完成 · 09:00</span></div>
+</div></div>
+
+<p class="note">⑦ 輸入框 —— field 檔;focus = accent 邊 + 3px 光暈(文字框的 focus 例外款);placeholder = text-faint。</p>
+<div class="panel"><div class="composer">
+  <textarea class="input" rows="1" placeholder="跟 Pocky 說點什麼…"></textarea>
+  <button class="btn btn-primary">送出</button>
+</div></div>
+
+<p class="note">⑧ Toast —— dialog 檔 radius 20、影級 3、danger 底;dark 用淡紅底配深字(#2A1210)。</p>
+<div class="panel"><span class="toast-demo">⚠ 連不上即時串流,內容可能過時</span></div>
+</section>
+
+<section>
+<h2><span class="no">05</span>禁例 —— 紅叉對照</h2>
+<div class="dont-grid">
+  <div class="dont"><div class="tag">✕ accent 大面積</div><div class="ex">
+    <div class="ex-redflood">整版紅底<p>「紅是訊號不是地毯」—— 大面積 accent 會淹掉真正的訊號。</p></div>
+  </div><p class="cap">✓ 正解:accent 只給主按鈕/選取指示/focus/連結強調;選取底用 accentSurface 淡紅。</p></div>
+  <div class="dont"><div class="tag">✕ 品牌覆寫狀態色</div><div class="ex">
+    <span class="badok" style="background:var(--pocket-red);color:#fff">失敗(用品牌紅)</span>
+    <span class="badok" style="background:var(--star-yellow);color:var(--ink)">成功(用品牌黃)</span>
+    <p class="note" style="margin:10px 0 0">deny 必須 ≠ accent;狀態色吃 SDS 固定值 →
+    <span class="dot ph-danger" style="font-size:13px"><i></i>失敗</span>
+    <span class="dot ph-success" style="font-size:13px"><i></i>成功</span></p>
+  </div></div>
+  <div class="dont"><div class="tag">✕ 行高低於 1.7</div><div class="ex">
+    <p class="ex-tight" style="margin:0">中文正文擠在 1.25 行高裡,筆畫黏行,讀兩段眼睛就累;這是 CJK 排版最常見的病。</p>
+  </div><p class="cap">✓ 正解:body 16/1.75;只有 caption 檔可到 1.6。</p></div>
+  <div class="dont"><div class="tag">✕ 無 focus ring</div><div class="ex">
+    <button class="btn btn-secondary ex-nofocus">Tab 到我沒反應</button>
+    <p class="note" style="margin:10px 0 0">✓ 正解:統一 2px accent outline + 2px offset(Tab 試試本頁任何元件);文字框用 accent 邊 + 3px 光暈。</p>
+  </div></div>
+</div>
+</section>
+
+<footer>
+  <strong>Pocket 設計規範 styleguide v1.0</strong> · 對位 Studio Design System v0.3(design.shan.house)·
+  單一真相:pocket-cis repo <code>design/pocket.html</code>(本頁同步掛 pocketone.app/design 與 design.shan.house/pocket)<br>
+  三端實作:iOS <code>Packages/PocketDesign/Sources/PocketDesign/</code>(PocketColor/PocketThemeSpec)·
+  Android <code>docs/THEME_SPEC.md</code>(53-role JSON)·
+  web <code>pocket-cis/static/console/style.css</code>(L2 <code>--color-*</code>)·
+  規範正文 <code>docs/POCKET_DESIGN_SPEC.md</code>
+</footer>
+</main>
+<div class="copied-toast" id="copied">已複製</div>
+
+<script>
+/* 極少量 JS:主題切換 + 色票點擊複製 —— 都是增強,沒有 JS 頁面照常可讀 */
+(function(){
+  var KEY="pocket-styleguide-theme";
+  var btns=document.querySelectorAll("[data-set-theme]");
+  function setTheme(t){
+    document.documentElement.setAttribute("data-theme",t);
+    btns.forEach(function(b){b.classList.toggle("active",b.dataset.setTheme===t);});
+    try{localStorage.setItem(KEY,t);}catch(e){}
+    renderL2();
+  }
+  btns.forEach(function(b){b.addEventListener("click",function(){setTheme(b.dataset.setTheme);});});
+  var saved=null; try{saved=localStorage.getItem(KEY);}catch(e){}
+  if(saved&&saved!=="pocket")setTheme(saved);
+
+  /* L1 色票(固定值) */
+  var L1=[
+    ["Pocket Red","#EE2D2A","accent · CTA · 訊號"],
+    ["Red 300(dark)","#FF4D4A","dark 提亮階"],
+    ["Overall Blue","#049CD8","link / 第二識別"],
+    ["Star Yellow","#FBD000","徽章 · 點綴,不搶紅"],
+    ["White","#FFFFFF","卡片 · agent 泡"],
+    ["Ink","#17171A","文字 · 邊框基底"],
+    ["Warm Cream","#FFF2D6","品牌奶油底 ★"],
+    ["Cream sunken","#F7EACB","側欄 · 深一階暖紙"],
+    ["Accent Surface","#FBDFD6","user 泡 · 選取底"],
+    ["Red hover","#D11F1C","hover 階"],
+    ["Red active","#B01A18","active · 漸層深端"],
+    ["Action Link","#C42320","內文連結(5.24:1)"]
+  ];
+  /* L2 語意(讀 computed style,跟著主題變) */
+  var L2=["canvas","surface","surface-sunken","accent-surface","text","text-muted",
+          "text-faint","accent","accent-foreground","link","success","danger","info","warning"];
+  function chipBtn(name,val,role){
+    var b=document.createElement("button");
+    b.className="sw";b.type="button";
+    b.innerHTML='<span class="chip" style="background:'+val+'"></span>'+
+      '<span class="meta"><span class="nm">'+name+'</span><span class="val">'+val+'</span>'+
+      (role?'<span class="role">'+role+'</span>':'')+'</span>';
+    b.addEventListener("click",function(){
+      try{navigator.clipboard.writeText(val);}catch(e){}
+      var t=document.getElementById("copied");
+      t.textContent="已複製 "+val;t.classList.add("show");
+      clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove("show");},1400);
+    });
+    return b;
+  }
+  var l1=document.getElementById("sw-l1");
+  L1.forEach(function(r){l1.appendChild(chipBtn(r[0],r[1],r[2]));});
+  function renderL2(){
+    var el=document.getElementById("sw-l2");el.innerHTML="";
+    var cs=getComputedStyle(document.documentElement);
+    L2.forEach(function(r){
+      var v=cs.getPropertyValue("--color-"+r).trim();
+      el.appendChild(chipBtn(r,v,"--color-"+r));
+    });
+  }
+  renderL2();
+})();
+</script>
+</body>
+</html>

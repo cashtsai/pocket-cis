@@ -1,0 +1,104 @@
+/* ═══════════ Pocket tokens — web L1/L2(純變數檔,可直接 @import)═══════════
+   Extracted from the Pocket console stylesheet (canonical: the bridge repo's
+   static/console/style.css — Studio Design System token 三層制的 L1+L2 layers).
+
+   L1 palette(品牌常數)→ L2 語意別名(--color-*,命名對位 PocketThemeSpec
+   的 53-role schema,見 tokens/pocket-theme.schema.json)。L3(元件)不在本檔:
+   元件只准引用這裡的語意名。
+
+   用法:@import 本檔,然後在 <html data-theme="pocket|white|dark"> 切主題。
+   未設 data-theme 時預設 pocket(奶油暖底)。
+
+   ⚠️ 本檔目前手動鏡像 console css;THEME_SPEC→CSS 生成器是 roadmap 項
+   (見 ROADMAP.md)—— 生成器落地後本檔改由 themes/*.json 生成。 */
+:root{
+  /* ── L1 palette:品牌常數 ── */
+  --pocket-red:#EE2D2A;    --pocket-red-300:#FF4D4A;   /* dark 用亮一階 */
+  /* v0.3 L1 theme 家族對位(--palette-theme-*):品牌主題色就是 Pocket Red 階。 */
+  --palette-theme-600:var(--pocket-red); --palette-theme-300:var(--pocket-red-300);
+  /* v0.3 L2 新 token */
+  --color-text-disabled:#A89F93;  /* disabled 階(允許 <3:1,僅限禁用態) */
+  --color-action-link:#C42320;    /* 連結專用:比 accent 深一階,內文可讀 */
+  --overall-blue:#049CD8;  --overall-blue-300:#2AA8E0;
+  --star-yellow:#FBD000;   --star-yellow-300:#FFD426;
+  --ink:#17171A;           --paper-cream:#FFF2D6;      /* 品牌奶油底,拍板保留 */
+
+  /* ── 結構 token(跨主題不變)── */
+  --btn-radius:9999px;   /* 按鈕=膠囊(SDS 簽名):送出/繼續/中斷/mode 鈕 */
+  --field-radius:10px;   /* 欄位/列/chip:輸入框、sess 列、附件 chip、程式碼框 */
+  --dialog-radius:20px;  /* 彈窗/浮層:⌘K 面板、toast */
+  /* 文字級小裝飾(inline code、mark 等非互動元素)保留 3–6px 細圓角,不入三檔 */
+
+  /* ── 動效 token(SDS):一條曲線兩檔時長,全檔 transition 只准引用 ── */
+  --ease-standard:cubic-bezier(.2,0,0,1);
+  --duration-base:.2s; --duration-slow:.25s;
+
+  /* ── 陰影兩級(SDS 柔影):奶油底用暖灰基底 oklch(25% .04 55 / α),
+        卡片用 1、浮層/彈窗用 2;dark 在下面覆蓋成純黑基底 ── */
+  --shadow-1:0 2px 6px oklch(25% .04 55/.12),0 1px 2px oklch(25% .04 55/.08);   /* SDS 卡片 */
+  --shadow-2:0 8px 24px oklch(25% .04 55/.17),0 1px 2px oklch(25% .04 55/.08);  /* 彈出/選單 */
+  --shadow-3:0 16px 48px oklch(25% .04 55/.23),0 1px 2px oklch(25% .04 55/.08); /* v0.3 toast/抽屜 */
+  --shadow-4:0 28px 80px oklch(25% .04 55/.3),0 1px 2px oklch(25% .04 55/.08);  /* v0.3 對話框+遮罩 */
+
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+
+:root,
+:root[data-theme="pocket"]{
+  /* ── L2 語意別名(role 名對位 PocketThemeSpec)── */
+  --color-canvas:var(--paper-cream);   /* canvas — 頁底(品牌保留) */
+  --color-surface:#FFFFFF;             /* surface — 卡片浮層 */
+  --color-surface-sunken:#F7EACB;      /* 側欄、代碼框:比頁底深一階的暖紙 */
+  --color-surface-hover:rgba(23,23,26,.06);
+  --color-accent-surface:#FBDFD6;      /* accentSurface — user 泡泡/選取底,Ink 字 14.2:1 */
+  --color-border:rgba(23,23,26,.14);   /* border — Ink 淡化 */
+  --color-text:var(--ink);             /* text */
+  --color-text-muted:#6B6760;          /* textMuted — 奶油底 5.07:1(≥4.5) */
+  --color-text-faint:#8A847A;          /* placeholder/iconMuted — 3.34:1(≥3) */
+  --color-accent:var(--pocket-red);    /* accent — 只用於主按鈕/選取指示/focus/連結強調 */
+  --color-accent-foreground:#FFFFFF;   /* accentForeground */
+  --color-link:var(--overall-blue);    /* 連結/info 點綴 — Overall Blue */
+  --color-amber:var(--star-yellow);
+  /* 狀態色對位 SDS(跨品牌固定,light 用深階) */
+  --color-success:#1d7a4a; --color-danger:#b42318;
+  --color-info:#1f6aa1;    --color-warning:oklch(48% .1 85);
+  --color-danger-foreground:#FFFFFF;
+  /* diff / 檔案狀態色:淺底用深一階,深色主題在下面覆蓋。
+     ⚠️ 這幾個以前是掛 @media (prefers-color-scheme) —— 那會跟著「系統」深淺走,
+     使用者選了 pocket 淺色但系統是深色時就整組錯配。改成跟著 data-theme。 */
+  --diff-add:#2f7a5e; --diff-del:#b03b32; --diff-hunk:#3f6ea8;
+}
+:root[data-theme="white"]{
+  --color-canvas:#F5F5F7; --color-surface:#FFFFFF; --color-surface-sunken:#E9E9EC;
+  --color-surface-hover:rgba(23,23,26,.05);
+  --color-accent-surface:#FBDFDE;
+  --color-border:rgba(23,23,26,.14);
+  --color-text:var(--ink);
+  --color-text-muted:#68686D; --color-text-faint:#84848D; /* 5.09:1、3.40:1 on #F5F5F7 */
+  --color-accent:var(--pocket-red); --color-accent-foreground:#FFFFFF;
+  --color-link:var(--overall-blue); --color-amber:var(--star-yellow);
+  --color-success:#1d7a4a; --color-danger:#b42318;
+  --color-info:#1f6aa1;    --color-warning:oklch(48% .1 85);
+  --color-danger-foreground:#FFFFFF;
+}
+:root[data-theme="dark"]{
+  --color-canvas:#131317; --color-surface:#1E1E25; --color-surface-sunken:#0E0E12;
+  --color-surface-hover:rgba(255,255,255,.07);
+  --color-accent-surface:#4A2B2C;
+  --color-border:rgba(255,255,255,.12);
+  --color-text:#F2F2F5;
+  --color-text-muted:#9A9AA2; --color-text-faint:#70707A; /* 6.63:1、3.78:1 on #131317 */
+  --color-accent:var(--pocket-red-300); --color-accent-foreground:#FFFFFF;
+  --color-link:var(--overall-blue-300); --color-amber:var(--star-yellow-300);
+  /* 狀態色 dark 用 SDS 300 階 */
+  --color-success:#6fd39d; --color-danger:#f59a90;
+  --color-info:#7cc0ec;    --color-warning:oklch(82% .14 85);
+  --color-danger-foreground:#2A1210; /* 淡紅實底上的深字(toast 等) */
+  --diff-add:#5bb68f; --diff-del:#e2726a; --diff-hunk:#7aa6e8;
+  /* v0.3 深色層級策略:表面越高越亮(surface→raised→hover)為主,陰影只當輔助。 */
+  --shadow-1:0 1px 2px oklch(0% 0 0 / .35),0 1px 6px oklch(0% 0 0 / .28);
+  --shadow-2:0 2px 8px oklch(0% 0 0 / .45),0 14px 40px oklch(0% 0 0 / .55);
+  --shadow-3:0 16px 48px oklch(0% 0 0 / .55),0 1px 2px oklch(0% 0 0 / .35);
+  --shadow-4:0 28px 80px oklch(0% 0 0 / .6),0 1px 2px oklch(0% 0 0 / .35);
+}
