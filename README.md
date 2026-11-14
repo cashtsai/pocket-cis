@@ -74,8 +74,9 @@ see [`cis/`](cis/README.md).
 - **Code, tokens, and styles** (`tokens/`, `swift/`, `design/`): MIT — see
   [LICENSE](LICENSE).
 - **Documents** (`cis/`, `brief/`, this README): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-- **The Pocket name, logo, mascot (the denim-pocket icon), launch art, and
-  persona avatars are trademarks / brand identity assets and are NOT covered
-  by either license.** See [`assets/USAGE.md`](assets/USAGE.md) for the
-  boundary. Fonts: jf open 粉圓 is under OFL 1.1; Luckiest Guy under
+- **The Pocket name and logo (the denim-pocket icon) may be used freely in
+  non-commercial contexts** — keep the mark unmodified and do not imply
+  official endorsement. Launch art and persona avatars remain brand assets
+  outside the licenses; commercial use of any mark requires contact. See
+  [`assets/USAGE.md`](assets/USAGE.md) for the full boundary. Fonts: jf open 粉圓 is under OFL 1.1; Luckiest Guy under
   Apache 2.0 (neither is bundled here).
