@@ -15,7 +15,7 @@ iOS / Android / Console 的自動升版。原生元件、執行狀態來源、ti
 ## Tokens
 
 匯入 [`pocket-web-interactions.css`](../tokens/css/pocket-web-interactions.css)，
-使用 `<html data-theme="pocket|white|dark">`。只有深色模式覆寫需要的值；
+使用 `<html data-theme="pocket|white|dark">`，也相容 `.dark` class。只有深色模式覆寫需要的值；
 其他模式沿用根節點。切換回淺色時，移除深色 selector 即還原。
 
 | 用途 | Token | 淺色 | 深色 |
