@@ -1,0 +1,28 @@
+/* Pocket web interaction extension v1, 2026-11-19. MIT.
+ * Additive web-only values; not a replacement for the 53-role theme spec.
+ * Consumers must bundle JetBrains Mono separately and preserve its OFL notice.
+ */
+:root {
+  --web-fill-mint: #E7F3EB;
+  --web-fill-sky: #E7F1FA;
+  --web-fill-peach: #FCE8E2;
+  --web-fill-amber: #FFF3CC;
+  --web-control-edge: #323238;
+  --web-control-shadow: 0 2px 0 #323238;
+  --web-control-shadow-hover: 0 3px 0 #323238;
+  --web-control-shadow-pressed: 0 0 0 transparent;
+  --web-action-fill: #D92926;
+  --web-action-ink: #FFFFFF;
+  --web-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.dark,
+[data-theme="dark"] {
+  --web-fill-mint: #193629;
+  --web-fill-sky: #183144;
+  --web-fill-peach: #402820;
+  --web-fill-amber: #3D3218;
+  --web-control-edge: #A8A8B1;
+  --web-control-shadow: 0 2px 0 #000000;
+  --web-control-shadow-hover: 0 3px 0 #000000;
+}

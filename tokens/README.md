@@ -12,6 +12,7 @@ Android Kotlin / web CSS)。
 | `themes/white.json` | 中性純白主題(`#F5F5F7` 底,不帶暖調;accent 同 pocket) |
 | `themes/dark.json` | 深色主題(`#131317` 底 + 提亮紅 `#FF4D4A`) |
 | `css/pocket-tokens.css` | web 端 L1(品牌常數)+ L2(`--color-*` 語意變數)純變數檔,`@import` 後以 `<html data-theme="pocket|white|dark">` 切主題 |
+| `css/pocket-web-interactions.css` | 官網與 Pocket Design 的額外網頁互動層：淡色塊、短實心按鈕陰影、動作紅與等寬字體；不改 53-role JSON。規範見 [`WEB_INTERACTIONS.md`](../cis/WEB_INTERACTIONS.md) |
 
 ## How the theme JSONs are built
 

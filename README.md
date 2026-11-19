@@ -17,8 +17,14 @@ snapshot, CSS variables, live styleguide).
 - <https://design.pocketone.app>
 - <https://design.shan.house/pocket>
 
-All three serve the same self-contained page as `design/pocket.html`
-(single source of truth: this repo).
+`pocketone.app/design` is the marketing introduction; `design.pocketone.app`
+is the separate interactive design system. Both are maintained in their own
+Lovable projects. `design/pocket.html` remains the repository's historical,
+self-contained reference, not their deployment source. The shan.house mirror
+has a separate deployment and is not updated by publishing either site.
+
+The additive [web interaction extension](cis/WEB_INTERACTIONS.md) documents
+the shared website controls without changing native app theme values.
 
 ## What's in here
 

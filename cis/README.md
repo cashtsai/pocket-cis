@@ -1,8 +1,9 @@
 # Pocket 設計規範 v1.1 —— SDS 之上的品牌層
 
 > v1.0 2026-11-13;v1.1 大擴編 2026-11-14(§10–§19 新章)。
-> 活樣本:[`design/pocket.html`](../design/pocket.html)(單檔自包含,
-> pocketone.app/design 與 design.shan.house/pocket 同步掛載)。
+> 活樣本：[Pocket Design](https://design.pocketone.app)；官網簡介在
+> [pocketone.app/design](https://pocketone.app/design)。兩站目前分別以 Lovable 維護。
+> [`design/pocket.html`](../design/pocket.html) 保留為舊版單檔參考，不是兩站部署來源。
 >
 > 定位:**Pocket 是 Studio Design System v0.3(design.shan.house)之上的品牌層。**
 > SDS 管「結構」—— token 三層制、狀態色固定值、字階四檔、圓角三檔、陰影四級、
@@ -19,6 +20,9 @@
 > 升版時本目錄同步重切。
 
 ## 章節
+
+網頁額外規範：[WEB_INTERACTIONS.md](WEB_INTERACTIONS.md)（2026-11-19）。
+此延伸僅供官網與設計站，不改 v1.1 的跨端主題與原生實作狀態。
 
 | 章 | 檔 | 內容 |
 |---|---|---|
